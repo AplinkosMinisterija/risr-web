@@ -1,0 +1,21 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-staging:
+    name: Deploy staging
+    uses: AplinkosMinisterija/reusable-workflows/.github/workflows/biip-deploy.yml@main
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write
+    with:
+      environment: Staging
+      docker-image: ghcr.io/AplinkosMinisterija/risr-web
+      build-args: |
+        NODE_ENV=production
+        REACT_APP_SENTRY_ENV=staging
+        REACT_APP_SENTRY_DSN=https://52fe256e8ee14e73a1704814223998b2@sentry.biip.lt/23
