@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { TableColumns } from "./columns/reducer";
 import { Filters } from "./filters/reducer";
 import { UserReducer } from "./user/reducer";
 import { Users } from "./users/reducer";
@@ -16,8 +15,7 @@ const persistConfig = {
 const reducers = combineReducers({
   user: UserReducer.reducer,
   users: Users.reducer,
-  filters: Filters.reducer,
-  columns: TableColumns.reducer
+  filters: Filters.reducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

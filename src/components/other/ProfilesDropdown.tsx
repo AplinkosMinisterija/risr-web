@@ -14,7 +14,6 @@ import { buttonsTitles, inputLabels } from "../../utils/texts";
 import Icon from "./Icons";
 
 export const slugToIcon = {
-  [slugs.requests]: "description",
   [slugs.forms]: "campaign",
   [slugs.profile]: "person",
   [slugs.tenantUsers]: "group"

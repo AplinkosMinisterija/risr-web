@@ -1,7 +1,6 @@
 import Axios, { AxiosInstance, AxiosResponse } from "axios";
-import { isEmpty } from "lodash";
 import Cookies from "universal-cookie";
-import { Form, FormFiltersProps, Request, User, UserFilters } from "./types";
+import { Form, FormFiltersProps, Group, User, UserFilters } from "./types";
 import { Populations, Resources, SortFields } from "./utils/constants";
 const cookies = new Cookies();
 
@@ -206,64 +205,6 @@ class Api {
     });
   };
 
-  getLocations = async ({ search, page }: TableList): Promise<Request> =>
-    await this.getAll({
-      resource: Resources.SEARCH,
-      search,
-      page
-    });
-
-  getRequest = async (id: string, scope?: string): Promise<Request> =>
-    await this.getOne({
-      resource: Resources.REQUESTS,
-      populate: [Populations.CAN_EDIT, Resources.GEOM],
-      scope,
-      id
-    });
-
-  deleteRequest = async (id: string): Promise<Request> => {
-    return await this.delete({
-      resource: Resources.REQUESTS,
-      id
-    });
-  };
-
-  uploadFiles = async (
-    resource: Resources,
-    files: File[] = []
-  ): Promise<any> => {
-    if (isEmpty(files)) return [];
-
-    const config = {
-      headers: { "Content-Type": "multipart/form-data" }
-    };
-
-    try {
-      const data = await Promise.all(
-        files?.map(async (file) => {
-          const formData = new FormData();
-          formData.append("file", file);
-          const { data } = await this.AuthApiAxios.post(
-            `/${resource}/${Resources.UPLOAD}`,
-            formData,
-            config
-          );
-          return data;
-        })
-      );
-
-      return data?.map((file) => {
-        return {
-          name: file.filename,
-          size: file.size,
-          url: file?.url
-        };
-      });
-    } catch (e: any) {
-      return { error: e.response.data.message };
-    }
-  };
-
   forms = async ({
     filter,
     page,
@@ -278,11 +219,30 @@ class Api {
       pageSize
     });
 
-  form = async (id: string): Promise<Form> =>
+  getForms = async ({
+    filter,
+    page,
+    pageSize
+  }: TableList<FormFiltersProps>): Promise<GetAllResponse<Form>> =>
+    await this.getAll({
+      resource: Resources.FORMS,
+      populate: [Resources.CREATED_BY],
+      sort: [SortFields.CREATED_AT],
+      page,
+      filter,
+      pageSize
+    });
+
+  getForm = async (id: string): Promise<Form> =>
     await this.getOne({
       resource: Resources.FORMS,
-      populate: [Resources.GEOM, Resources.CAN_EDIT],
       id
+    });
+
+  getFormGroups = async (): Promise<Group[]> =>
+    await this.getAll({
+      resource: Resources.FORMS_GROUPS,
+      populate: [Populations.CHILDREN]
     });
 
   createForm = async (params: any): Promise<Form> => {
@@ -295,42 +255,6 @@ class Api {
   updateForm = async (id: string, params: any): Promise<Form> => {
     return await this.update({
       resource: Resources.FORMS,
-      params,
-      id
-    });
-  };
-
-  requests = async ({
-    filter,
-    page,
-    pageSize
-  }: TableList<FormFiltersProps>): Promise<GetAllResponse<Request>> =>
-    await this.getAll({
-      resource: Resources.REQUESTS,
-      populate: [Resources.CREATED_BY],
-      sort: [SortFields.CREATED_AT],
-      page,
-      filter,
-      pageSize
-    });
-
-  request = async (id: string): Promise<Request> =>
-    await this.getOne({
-      resource: Resources.REQUESTS,
-      populate: [Resources.GEOM, Populations.CAN_EDIT, Populations.OBJECTS],
-      id
-    });
-
-  createRequests = async (params: any): Promise<Request> => {
-    return await this.create({
-      resource: Resources.REQUESTS,
-      params
-    });
-  };
-
-  updaterRequest = async (id: string, params: any): Promise<Request> => {
-    return await this.update({
-      resource: Resources.REQUESTS,
       params,
       id
     });
@@ -383,20 +307,6 @@ class Api {
       resource: Resources.USERS,
       params,
       id
-    });
-
-  getRequestHistory = async ({ page, pageSize, id }: TableList) =>
-    await this.getAll({
-      resource: `${Resources.REQUESTS}/${id}/${Resources.HISTORY}`,
-      page,
-      pageSize
-    });
-
-  getFormHistory = async ({ page, pageSize, id }: TableList) =>
-    await this.getAll({
-      resource: `${Resources.FORMS}/${id}/${Resources.HISTORY}`,
-      page,
-      pageSize
     });
 
   getMapToken = async () =>

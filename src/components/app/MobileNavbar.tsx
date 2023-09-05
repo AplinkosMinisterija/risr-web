@@ -47,7 +47,6 @@ const MobileHeader = () => {
                   key={`tab-${index}`}
                 >
                   {route.label}
-                  {route?.icon}
                 </Tab>
               );
             })}

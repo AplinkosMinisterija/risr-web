@@ -9,8 +9,7 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import { device } from "../../styles";
-import { getActiveColumns, useGetSortedColumns } from "../../utils/functions";
-import ColumnButton, { ColumnButtonProps } from "../other/ColumnButton";
+import { Columns } from "../../types";
 import DynamicFilter, { DynamicFilterProps } from "../other/DynamicFilter";
 import Icon from "../other/Icons";
 import LoaderComponent from "../other/LoaderComponent";
@@ -38,8 +37,8 @@ export interface LoginLayoutProps {
   loading?: boolean;
   rightButtons?: JSX.Element;
   filterInfo?: DynamicFilterProps;
-  columnInfo: ColumnButtonProps;
   notFoundInfo: NotFoundProps;
+  columns: Columns;
 }
 
 const Table = ({
@@ -49,12 +48,12 @@ const Table = ({
   customPageName,
   rightButtons,
   loading,
+  columns,
   filterInfo,
-  columnInfo,
   notFoundInfo
 }: LoginLayoutProps) => {
   const { label, urlLabel, url } = notFoundInfo;
-  const { handleToggle, columns } = columnInfo;
+
   const { filterConfig, rowConfig, isFilterApplied, onSetFilters, filters } =
     filterInfo!;
   const navigate = useNavigate();
@@ -66,8 +65,7 @@ const Table = ({
   const isMobile = useMediaQuery(device.mobileL);
   const pageRange = isMobile ? 1 : 3;
   const pageMargin = isMobile ? 1 : 3;
-  const sortedColumns = useGetSortedColumns(columns);
-  const activeColumns = getActiveColumns(columns);
+
   const navigateRef = useRef(navigate);
   const handleRowClick = (row: TableRow) => {
     if (onClick && row.id) {
@@ -109,12 +107,6 @@ const Table = ({
               loading={loading}
             />
           )}
-          {columnInfo && (
-            <ColumnButton
-              handleToggle={handleToggle!}
-              columns={sortedColumns}
-            />
-          )}
         </InnerRow>
 
         {rightButtons}
@@ -124,7 +116,7 @@ const Table = ({
         {isMobile ? (
           <MobileTable
             data={data?.data}
-            columns={activeColumns}
+            columns={columns}
             handleRowClick={handleRowClick}
             tableRowStyle={tableRowStyle}
             emptyStateComponent={notFoundComponent}
@@ -133,7 +125,7 @@ const Table = ({
         ) : (
           <DesktopTable
             data={data?.data}
-            columns={activeColumns}
+            columns={columns}
             handleRowClick={handleRowClick}
             tableRowStyle={tableRowStyle}
             emptyStateComponent={notFoundComponent}

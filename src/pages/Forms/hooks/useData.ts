@@ -1,10 +1,8 @@
 import { isEmpty } from "lodash";
 import Api from "../../../api";
-import { ColumnButtonProps } from "../../../components/other/ColumnButton";
 import { DynamicFilterProps } from "../../../components/other/DynamicFilter";
 import { NotFoundProps } from "../../../components/other/NotFound";
 import { ButtonInfo } from "../../../components/wrappers/PageWrapper";
-import { actions as columnActions } from "../../../state/columns/reducer";
 import { actions } from "../../../state/filters/reducer";
 import {
   useAppSelector,
@@ -23,7 +21,6 @@ import { mapFormFilters, mapForms } from "../functions";
 export const useData = () => {
   const { dispatch, navigate, page } = useGenericTablePageHooks();
   const filters = useAppSelector((state) => state.filters.formFilters);
-  const columns = useAppSelector((state) => state.columns.form);
 
   const { tableData, loading } = useTableData({
     endpoint: () =>
@@ -51,11 +48,6 @@ export const useData = () => {
     filters: filters
   };
 
-  const columnInfo: ColumnButtonProps = {
-    columns,
-    handleToggle: (key) => dispatch(columnActions.toggleFormColumns(key))
-  };
-
   const notFoundInfo: NotFoundProps = {
     url: slugs.newForm,
     urlLabel: emptyStateUrlLabels.form,
@@ -64,7 +56,6 @@ export const useData = () => {
 
   return {
     notFoundInfo,
-    columnInfo,
     filterInfo,
     buttonInfo,
     navigate,

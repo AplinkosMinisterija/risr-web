@@ -117,6 +117,7 @@ export enum ServerErrors {
 export enum Resources {
   LOGIN = "auth/login",
   CAN_EDIT = "canEdit",
+  FORMS_GROUPS = "forms/groups",
   MAPS_AUTH = "maps/auth",
   GEOM = "geom",
   REFRESH_TOKEN = "auth/refresh",
@@ -140,6 +141,7 @@ export enum Populations {
   SOURCE = "source",
   ROLE = "role",
   CAN_EDIT = "canEdit",
+  CHILDREN = "children",
   OBJECTS = "objects"
 }
 

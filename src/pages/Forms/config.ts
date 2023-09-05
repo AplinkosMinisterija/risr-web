@@ -1,9 +1,4 @@
 import { FilterInputTypes } from "../../components/other/DynamicFilter/Filter";
-import {
-  getFormObjectTypes,
-  getFormStatusTypes,
-  getFormSTypes
-} from "../../utils/options";
 import { formFiltersLabels } from "../../utils/texts";
 
 export const filterConfig = {
@@ -12,34 +7,22 @@ export const filterConfig = {
     key: "createdFrom",
     inputType: FilterInputTypes.date
   },
+  name: {
+    label: formFiltersLabels.name,
+    key: "name",
+    inputType: FilterInputTypes.text
+  },
+  code: {
+    label: formFiltersLabels.code,
+    key: "code",
+    inputType: FilterInputTypes.text
+  },
+
   createdTo: {
     label: formFiltersLabels.createdTo,
     key: "createdTo",
     inputType: FilterInputTypes.date
-  },
-  type: {
-    label: formFiltersLabels.type,
-    key: "type",
-    inputType: FilterInputTypes.multiselect,
-    options: getFormSTypes()
-  },
-  objectType: {
-    label: formFiltersLabels.objectType,
-    key: "objectType",
-    inputType: FilterInputTypes.multiselect,
-    options: getFormObjectTypes()
-  },
-  status: {
-    label: formFiltersLabels.status,
-    key: "status",
-    inputType: FilterInputTypes.multiselect,
-    options: getFormStatusTypes()
   }
 };
 
-export const rowConfig = [
-  ["objectType"],
-  ["type"],
-  ["createdFrom", "createdTo"],
-  ["status"]
-];
+export const rowConfig = [["name"], ["code"], ["createdFrom", "createdTo"]];

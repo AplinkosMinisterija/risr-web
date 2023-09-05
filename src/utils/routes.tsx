@@ -1,54 +1,30 @@
-import styled from "styled-components";
-import Icon from "../components/other/Icons";
 import Form from "../pages/Form";
 import Forms from "../pages/Forms";
 import ProfilePage from "../pages/Profile";
 import Profiles from "../pages/Profiles";
-import RequestPage from "../pages/Request";
-import Requests from "../pages/Requests";
 import TenantUserForm from "../pages/TenantUserForm";
 import TenantUsers from "../pages/TenantUsers";
 import { Profile } from "../types";
 import { handleIsTenantOwner, handleIsTenantUser } from "./functions";
-import { menuLabels, url } from "./texts";
+import { menuLabels } from "./texts";
 
 export const slugs = {
   profile: "/profilis",
   profiles: "/profiliai",
-  forms: "/duomenu-teikimas",
-  formMy: "/duomenu-teikimas/mano",
-  newForm: "/duomenu-teikimas/naujas",
-  form: (id: string) => `/duomenu-teikimas/${id}`,
-  requests: `/prasymai`,
-  request: (id: string) => `/prasymai/${id}`,
-  newRequest: "/prasymai/naujas",
+  forms: "/anktetos",
+  newForm: "/anketos/naujas",
+  form: (id: string) => `/anketos/${id}`,
   tenantUsers: `/imones_darbuotojai`,
   tenantUser: (id?: string) => `/imones_darbuotojai/${id}`,
   newTenantUser: `/imones_darbuotojai/naujas`,
   placesMap: `/radavieciu-zemelapis`
 };
 
-const StyledIcons = styled(Icon)`
-  color: #cdd5df;
-  font-size: 1.8rem;
-`;
-
 export const externalRoutes = [
   {
     label: menuLabels.forms,
     slug: slugs.forms,
     internal: true
-  },
-  {
-    label: menuLabels.requests,
-    slug: slugs.requests,
-    internal: true
-  },
-
-  {
-    label: "UETK",
-    slug: url.publicUETK,
-    icon: <StyledIcons name={"open"} />
   }
 ];
 
@@ -81,14 +57,7 @@ const routes = [
     tenantOwner: true,
     component: <TenantUserForm />
   },
-  {
-    slug: slugs.requests,
-    component: <Requests />
-  },
-  {
-    slug: slugs.request(":id"),
-    component: <RequestPage />
-  },
+
   {
     slug: slugs.profiles,
     component: <Profiles />
