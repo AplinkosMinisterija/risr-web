@@ -70,10 +70,7 @@ const RenderTable = ({
       return groups.reduce((prev, group) => {
         const getAllValues = (key) =>
           getMaxValue(
-            group?.children
-              ?.flat()
-              .filter((group) => parseInt(item?.[group?.id!]?.[key]) !== 0)
-              .map((group) => item?.[group?.id!]?.[key])!
+            group?.children?.flat().map((group) => item?.[group?.id!]?.[key])!
           );
 
         const k = getAllValues("k");
@@ -99,9 +96,9 @@ const RenderTable = ({
         DGMax: values.reduce(
           (prev: any, item: any) => {
             return {
-              k: parseInt(item.k) !== 0 ? Math.min(prev.k, item.k) : prev.k,
-              v: parseInt(item.v) !== 0 ? Math.min(prev.v, item.v) : prev.v,
-              p: parseInt(item.p) !== 0 ? Math.min(prev.p, item.p) : prev.p
+              k: getMaxValue([prev.k, item.k]),
+              v: getMaxValue([prev.v, item.v]),
+              p: getMaxValue([prev.p, item.p])
             };
           },
           { k: values[0]?.k, v: values[0]?.v, p: values[0]?.p }
@@ -110,16 +107,20 @@ const RenderTable = ({
     });
 
     const ISMax = allItemsWithMax.reduce(
-      (prev, item: any) => {
+      (prev: any, item: any) => {
         const { k, v, p } = item.DGMax!;
 
         return {
-          k: Math.min(prev.k, k),
-          v: Math.min(prev.v, v),
-          p: Math.min(prev.v, p)
+          k: getMaxValue([prev?.k, k]),
+          v: getMaxValue([prev?.v, v]),
+          p: getMaxValue([prev?.p, p])
         };
       },
-      { k: Infinity, v: Infinity, p: Infinity }
+      {
+        k: allItemsWithMax[0].DGMax.k,
+        v: allItemsWithMax[0].DGMax.v,
+        p: allItemsWithMax[0].DGMax.p
+      }
     );
 
     const max = getMaxValue([ISMax.k, ISMax.p, ISMax.v]);
@@ -137,6 +138,7 @@ const RenderTable = ({
         const childItems = innerItems
           .map((item) => {
             if (!item?.[curr.id!]) return "";
+
             const { group, ...rest } = item?.[curr.id!];
             return Object.values(rest);
           })
