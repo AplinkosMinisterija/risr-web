@@ -117,9 +117,9 @@ const RenderTable = ({
         };
       },
       {
-        k: allItemsWithMax[0].DGMax.k,
-        v: allItemsWithMax[0].DGMax.v,
-        p: allItemsWithMax[0].DGMax.p
+        k: allItemsWithMax[0]?.DGMax?.k,
+        v: allItemsWithMax[0]?.DGMax?.v,
+        p: allItemsWithMax[0]?.DGMax?.p
       }
     );
 
