@@ -22,11 +22,10 @@ const Menu = () => {
               }
             >
               {route.label}
-              {!!route?.icon && route?.icon}
             </Tab>
           ))}
+          <ProfilesDropdown />
         </TabContainer>
-        <ProfilesDropdown />
       </InnerContainer>
     </Header>
   );

@@ -86,28 +86,6 @@ export interface ListResultProps<T> {
   error?: string;
 }
 
-export interface TransformUser {
-  id?: string;
-  fullName: string;
-  email: string;
-  roles: string;
-  active: string;
-}
-
-export interface TransformObservation {
-  id?: string;
-  name: string;
-  nameLatin: string;
-  createdAt: string;
-}
-
-export interface FormHistory {
-  type: HistoryTypes;
-  comment: string;
-  createdBy: User;
-  createdAt: Date;
-}
-
 export type HandleChangeType = (name: string, value: any) => void;
 export type ChildrenType = string | JSX.Element | JSX.Element[] | any;
 
@@ -120,86 +98,41 @@ export interface DeleteInfoProps {
   deleteFunction?: () => void;
 }
 
-export interface TransformPlace {
-  id?: string;
-  code: string;
-  species: string;
-  status: string;
-}
-
 export interface UserFilters {
   firstName?: string;
   lastName?: string;
 }
 
+export interface FormFiltersProps {
+  tenant?: string | number;
+  createdAt?: { $gte?: Date; $lt?: Date };
+  code?: string;
+  name?: string;
+}
+
 export interface FormFilters {
   createdFrom?: string;
+  code?: string;
+  name?: string;
   createdTo?: string;
-  status?: { id: StatusTypes; label: string }[];
-  objectType?: { id: FormObjectType; label: string }[];
-  type?: { id: FormType; label: string }[];
-}
-
-export interface FormFiltersProps {
-  createdAt?: { $gte?: Date; $lt?: Date };
-  status?: { $in: StatusTypes[] };
-  type?: { $in: FormType[] };
-  objectType?: { $in: FormObjectType[] };
-}
-
-export interface RequestFilters {
-  createdFrom?: string;
-  createdTo?: string;
-  status?: { id: StatusTypes; label: string }[];
-  delivery?: { id: DeliveryTypes; label: string }[];
-  purpose?: { id: PurposeTypes; label: string }[];
-}
-
-export interface RequestFiltersProps {
-  status?: { $in: StatusTypes[] };
-  createdAt?: { $gte?: Date; $lt?: Date };
-  delivery?: { $in: DeliveryTypes[] };
-  purpose?: { $in: PurposeTypes[] };
+  createdBy?: User;
 }
 
 export interface Form {
   id?: string;
-  type: FormType;
+  name?: string;
+  code?: string;
+  items: {
+    name: string;
+    items: { k: string; v: string; p: string; group: string }[];
+  }[];
   createdBy?: User;
-  objectType?: FormObjectType;
-  objectName?: string;
-  cadastralId?: string;
-  geom: any;
-  description: string;
-  status?: StatusTypes;
-  files: any[];
-  providerType?: FormProviderType;
-  providedBy?: string;
-  data?: { [key in FormDataFields]?: string };
-  respondedAt?: Date;
   createdAt?: Date;
-  canEdit?: boolean;
-  canValidate?: boolean;
-  agreeWithConditions?: boolean;
-  editFields?: { attribute?: string; value?: string }[];
 }
 
-export interface Request {
+export interface Group {
   id?: string;
-  notifyEmail?: string;
-  objects?: { cadastralId: string; category: string }[];
-  status?: StatusTypes;
-  delivery?: DeliveryTypes;
-  purpose?: PurposeTypes;
-  canEdit?: boolean;
-  canValidate?: boolean;
-  data?: {
-    unverified?: boolean;
-    extended?: boolean;
-  };
-  geom?: any;
-  agreeWithConditions?: boolean;
-  respondedAt?: Date;
-  createdAt?: Date;
-  generatedFile?: any;
+  parent?: Group;
+  children?: Group[];
+  name: string;
 }

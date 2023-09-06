@@ -1,10 +1,8 @@
 import { isEmpty } from "lodash";
 import Api from "../../../api";
-import { ColumnButtonProps } from "../../../components/other/ColumnButton";
 import { DynamicFilterProps } from "../../../components/other/DynamicFilter";
 import { NotFoundProps } from "../../../components/other/NotFound";
 import { ButtonInfo } from "../../../components/wrappers/PageWrapper";
-import { actions as columnActions } from "../../../state/columns/reducer";
 import { actions } from "../../../state/filters/reducer";
 import {
   useAppSelector,
@@ -23,7 +21,6 @@ import { mapUsers } from "../functions";
 export const useData = () => {
   const { dispatch, navigate, page } = useGenericTablePageHooks();
   const filters = useAppSelector((state) => state.filters.userFilters);
-  const columns = useAppSelector((state) => state.columns.tenantUser);
 
   const { tableData, loading } = useTableData({
     endpoint: () =>
@@ -51,11 +48,6 @@ export const useData = () => {
     filters: filters
   };
 
-  const columnInfo: ColumnButtonProps = {
-    columns,
-    handleToggle: (key) => dispatch(columnActions.toggleTenantUserColumns(key))
-  };
-
   const notFoundInfo: NotFoundProps = {
     url: slugs.newTenantUser,
     urlLabel: emptyStateUrlLabels.user,
@@ -64,7 +56,6 @@ export const useData = () => {
 
   return {
     notFoundInfo,
-    columnInfo,
     filterInfo,
     buttonInfo,
     navigate,

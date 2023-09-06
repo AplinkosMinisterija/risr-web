@@ -44,6 +44,7 @@ import {
   MdOutlineCampaign,
   MdOutlineDelete,
   MdOutlineDescription,
+  MdOutlineEdit,
   MdOutlineFullscreen,
   MdOutlineFullscreenExit,
   MdOutlineGroups,
@@ -86,6 +87,8 @@ const Icon = ({ name, className, color, width, height }: IconProps) => {
       return <BsLayersHalf className={className} />;
     case "location":
       return <HiOutlineLocationMarker className={className} />;
+    case "edit":
+      return <MdOutlineEdit className={className} />;
     case "date":
       return <BiCalendarEvent className={className} />;
     case "info":

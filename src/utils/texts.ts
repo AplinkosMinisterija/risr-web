@@ -16,14 +16,14 @@ import {
 } from "./constants";
 
 export const emptyStateLabels = {
-  form: "Jūs neturite pateikę duomenų teikimų. Sukurkite ",
+  form: "Jūs neturite pateikę anketų . Sukurkite ",
   user: "Jūs neturite Naudotojų. Sukurkite ",
   request: "Jūs neturite pateikę prašymų. Pateikite ",
   excerpt: "Jūs neturite pateikę išrašų prašymų Pateikite "
 };
 
 export const emptyStateUrlLabels = {
-  form: "naują  duomenų teikimą",
+  form: "naują  anketą",
   user: "naują naudotoją",
   request: "naują prašymą"
 };
@@ -41,13 +41,10 @@ export const subTitles = {
 };
 
 export const formFiltersLabels = {
-  objectType: "Kategorija",
   createdFrom: "Sukūrimo data nuo",
   createdTo: "Sukūrimo data iki",
-  status: "Būsena",
-  species: "Rūšis",
-  users: "Pateikė",
-  type: "Tipas"
+  name: "Pavadinimas",
+  code: "Kodas"
 };
 
 export const userFilterLabels = {
@@ -61,128 +58,61 @@ export const usersLabels = {
   phone: { label: "Telefono numeris", show: true }
 };
 
-export const tenantUsersLabels = {
+export const tenantUsersColumns = {
   fullName: { label: "Vardas, pavardė", show: true },
   email: { label: "Elektroninis paštas", show: true },
   role: { label: "Teisė", show: true }
 };
 
-export const requestLabels = {
-  tableId: {
-    label: "Id",
-    mobileOrder: 0,
-    desktopOrder: 0,
-    show: true
-  },
-  delivery: {
-    label: "Išrašo pristatymo būdas",
-    mobileOrder: 1,
-    desktopOrder: 1,
-    show: true
-  },
-  purpose: {
-    label: "Duomenų gavimo tikslas",
-    mobileOrder: 2,
-    desktopOrder: 3,
-    show: true
-  },
-  createdAt: {
-    label: "Duomenų įvedimo data",
-    mobileOrder: 6,
-    desktopOrder: 5,
-    show: true
-  },
-  status: {
-    label: "Būsena",
-    mobileOrder: 2,
-    desktopOrder: 7,
-    show: true
-  },
-  respondedAt: {
-    label: "Atsakymo data",
-    mobileOrder: 8,
-    desktopOrder: 8,
-    show: true
-  },
-  generatedFile: {
-    label: "",
-    mobileOrder: 9,
-    desktopOrder: 9,
-    show: true
-  }
-};
-
-export const formTableLabels = {
+export const formColumns = {
   name: {
-    label: "Objekto Pavadinimas",
+    label: "Pavadinimas",
     mobileOrder: 1,
     desktopOrder: 1,
     show: true
   },
-  objectType: {
-    label: "Kategorija",
+  code: {
+    label: "Kodas",
     mobileOrder: 3,
     desktopOrder: 2,
     show: true
   },
-  type: {
-    label: "Tipas",
-    mobileOrder: 4,
-    desktopOrder: 3,
-    show: true
-  },
-  providedBy: {
-    label: "Pateikė",
-    mobileOrder: 5,
-    desktopOrder: 4,
-    show: true
-  },
+
   createdAt: {
     label: "Duomenų įvedimo data",
     mobileOrder: 6,
     desktopOrder: 5,
     show: true
   },
-
-  status: {
-    label: "Būsena",
+  createdBy: {
+    label: "Sukūrė",
     mobileOrder: 2,
     desktopOrder: 7,
     show: true
-  },
-  respondedAt: {
-    label: "Atsakymo data",
-    mobileOrder: 8,
-    desktopOrder: 8,
-    show: true
   }
 };
-
 export const pageTitles = {
-  request: (id: string) => `Prašymo nr. ${id}`,
-  requests: "Prašymai",
-  newRequest: "Naujas prašymas",
-  excerpt: (id: string) => `Prašymas nr. ${id}`,
+  form: (id: string) => `Anketa nr. ${id}`,
   profile: "Profilis",
-  newForm: "Naujas duomenų teikimas",
-  updateForm: "Atnaujinti duomenų teikimą",
+  newForm: "Nauja anketa",
   inviteTenantUser: "Pakviesti darbuotoją",
   updateTenantUser: "Atnaujinti darbuotoją",
-  forms: "Duomenų teikimai",
+  forms: "Anketos",
   users: "Naudotojai",
   updateProfile: "Atnaujinti profilį",
   tenantUsers: "Įmonės darbuotojai"
 };
 
 export const menuLabels = {
-  forms: "Duomenų teikimas",
-  requests: "Prašymai",
+  forms: "Anketos",
   profile: "Profilis",
   tenantUsers: "Įmonės darbuotojai",
   myProfile: "MANO PASKYRA"
 };
 export const buttonsTitles = {
   download: "Atsisiųsti",
+  update: "Atnaujinti",
+  add: "Pridėti",
   or: "arba",
   forgotPassword: "Pamiršau slaptažodį",
   login: "Prisijungti",

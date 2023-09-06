@@ -1,18 +1,10 @@
-import { useMediaQuery } from "@material-ui/core";
+import { isEmpty } from "lodash";
 import { NavigateFunction } from "react-router-dom";
 import { toast } from "react-toastify";
-import { default as api, default as Api } from "../api";
+import { default as Api } from "../api";
 import { FilterConfig } from "../components/other/DynamicFilter/Filter";
-import { device } from "../styles";
-import { Columns, Profile } from "../types";
-import {
-  FormDataFields,
-  FormObjectType,
-  FormProviderType,
-  RolesTypes,
-  StatusTypes,
-  SubPoolTypes
-} from "./constants";
+import { Profile } from "../types";
+import { RolesTypes } from "./constants";
 import { validationTexts } from "./texts";
 
 export const handleAlert = (responseError?: string) => {
@@ -40,75 +32,6 @@ export const handleSuccess = (message: string) => {
 };
 
 export const isNew = (id?: string) => !id || id === "naujas";
-
-export const bytesToMb = (bytes: number) => {
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-  if (bytes === 0) return "n/a";
-
-  const sizeArrayIndex = parseInt(
-    `${Math.floor(Math.log(bytes) / Math.log(1024))}`,
-    10
-  );
-  if (sizeArrayIndex === 0) return `${bytes} ${sizes[sizeArrayIndex]})`;
-  return `${(bytes / 1024 ** sizeArrayIndex).toFixed(1)} ${
-    sizes[sizeArrayIndex]
-  }`;
-};
-
-export const formObjectTypes = Object.keys(FormObjectType);
-export const formProviderTypes = Object.keys(FormProviderType);
-export const subPoolTypes = Object.keys(SubPoolTypes);
-
-export const canShowResponseDate = (status) => {
-  return [
-    StatusTypes.APPROVED,
-    StatusTypes.REJECTED,
-    StatusTypes.RETURNED
-  ].includes(status);
-};
-
-export const sortDesktop = (columns: Columns, key: string, key2: string) => {
-  if (columns[key].desktopOrder && columns[key2].desktopOrder) {
-    return columns?.[key]?.desktopOrder! > columns?.[key2]?.desktopOrder!
-      ? 1
-      : -1;
-  }
-
-  return 0;
-};
-
-export const sortMobile = (columns: Columns, key: string, key2: string) => {
-  if (columns[key].mobileOrder && columns[key2].mobileOrder) {
-    return columns?.[key]?.mobileOrder! > columns?.[key2]?.mobileOrder!
-      ? 1
-      : -1;
-  }
-
-  return sortDesktop(columns, key, key2);
-};
-
-export const getActiveColumns = (sortedColumns: Columns) =>
-  Object.keys(sortedColumns).reduce((obj, key) => {
-    if (sortedColumns[key].show) {
-      obj[key] = sortedColumns[key];
-    }
-    return obj;
-  }, {});
-
-export const handleToggleColumns = (columns: Columns, key: string) => {
-  columns[key].show = !columns[key].show;
-};
-
-export const handleSetVisibleColumns = (
-  columns: Columns,
-  items: { [key: string]: boolean }
-) => {
-  const keys = Object.keys(items);
-
-  keys.forEach((key) => {
-    columns[key].visible = items[key];
-  });
-};
 
 export const getUserList = async () => {
   return await Api.tenantUsers({
@@ -145,46 +68,22 @@ export const handleDateRestriction = (filter: FilterConfig, values: any) => {
   }
 };
 
-export const getLocationList = async (input: string, page: number | string) => {
-  return await api.getLocations({ search: input, page });
+export const getMaxValue = (values: any[]) => {
+  const items = values.filter((item) => {
+    return !!item && item?.toString() !== "0";
+  });
+
+  if (isEmpty(items)) return "";
+
+  return Math.min(...items);
 };
 
-export const isMapEditAttribute = (attribute) =>
-  [
-    FormDataFields.mouthCenterCoordinates,
-    FormDataFields.centerCoordinates
-  ].includes(attribute as FormDataFields);
-
-export const handleHasCoordinatesField = (editFields) =>
-  editFields.some((item) => isMapEditAttribute(item?.attribute));
-
-export const useGetSortedColumns = (columns: Columns) => {
-  const isMobile = useMediaQuery(device.mobileL);
-
-  const sortedColumns = Object.keys(columns)
-    .sort((key, key2) =>
-      isMobile
-        ? sortMobile(columns, key, key2)
-        : sortDesktop(columns, key, key2)
-    )
-    .reduce((obj, key) => {
-      const isVisible =
-        !columns[key].hasOwnProperty("visible") || columns[key].visible;
-
-      if (isVisible) {
-        obj[key] = columns[key];
-      }
-      return obj;
-    }, {});
-
-  return sortedColumns;
+export const isNumber = (number: any) => {
+  return !isNaN(number);
 };
 
-export const getPublicUrl = (url: string) => `${process.env.PUBLIC_URL}/${url}`;
+export const handleShowNumber = (number: any) => {
+  if (!/^[+-]?\d+(\.\d+)?$/.test(number)) return "-";
 
-export const availableMimeTypes = [
-  "image/png",
-  "image/jpg",
-  "image/jpeg",
-  "application/pdf"
-];
+  return number;
+};
