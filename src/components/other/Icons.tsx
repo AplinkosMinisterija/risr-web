@@ -44,6 +44,7 @@ import {
   MdOutlineCampaign,
   MdOutlineDelete,
   MdOutlineDescription,
+  MdOutlineEdit,
   MdOutlineFullscreen,
   MdOutlineFullscreenExit,
   MdOutlineGroups,
