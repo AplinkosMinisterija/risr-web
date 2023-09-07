@@ -17,11 +17,9 @@ const ListItem = ({
   const [expand, setExpand] = useState(false);
 
   const valueToIconName = {
-    0: "",
-    1: "max",
-    2: "medium",
-    3: "medium",
-    4: "min"
+    k: "max",
+    v: "medium",
+    p: "min"
   };
 
   const nameColor = {
@@ -46,7 +44,8 @@ const ListItem = ({
             <StyledIcon
               width="20"
               height="14"
-              name={valueToIconName[item?.k]}
+              color={nameColor[parsedK]}
+              name={valueToIconName.k}
             />
             <Name color={nameColor[parsedK]}>{item?.k}</Name>
           </IconRow>
@@ -54,7 +53,8 @@ const ListItem = ({
             <StyledIcon
               width="20"
               height="14"
-              name={valueToIconName[item?.v]}
+              color={nameColor[parsedV]}
+              name={valueToIconName.v}
             />
             <Name color={nameColor[parsedV]}>{item?.v}</Name>
           </IconRow>
@@ -62,7 +62,8 @@ const ListItem = ({
             <StyledIcon
               width="20"
               height="14"
-              name={valueToIconName[item?.p]}
+              color={nameColor[parsedP]}
+              name={valueToIconName.p}
             />
             <Name color={nameColor[parsedP]}>{item?.p}</Name>
           </IconRow>
