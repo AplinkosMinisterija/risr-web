@@ -60,7 +60,12 @@ import {
   MdUnfoldMore,
   MdViewModule
 } from "react-icons/md";
-import { RiArrowDownSLine, RiMap2Fill, RiTempColdLine } from "react-icons/ri";
+import {
+  RiArrowDownSFill,
+  RiArrowDownSLine,
+  RiMap2Fill,
+  RiTempColdLine
+} from "react-icons/ri";
 import {
   TiArrowSortedDown,
   TiArrowSortedUp,
@@ -83,6 +88,8 @@ const Icon = ({ name, className, height, width, color }: IconProps) => {
       return <RiTempColdLine className={className} />;
     case "layer":
       return <BsLayersHalf className={className} />;
+    case "miniArrowDown":
+      return <RiArrowDownSFill className={className} />;
     case "info":
       return <BiInfoCircle className={className} />;
     case "location":
