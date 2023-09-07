@@ -65,6 +65,16 @@ const Container = styled.div`
   opacity: 1;
   padding: 12px 34px;
   max-width: 297px;
+  position: relative;
+`;
+
+const InfoIcon = styled(Icon)`
+  font-size: 2.8rem;
+  position: absolute;
+  color: #697586;
+  cursor: pointer;
+  top: 5px;
+  right: 24px;
 `;
 
 export default DgItem;

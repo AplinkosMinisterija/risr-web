@@ -88,7 +88,7 @@ const ListItem = ({
               <IconRow />
             </InnerRow>
           </HeadingRow>
-          {group.children?.map((child, i) => {
+          {group.children?.map((child) => {
             const childItem = items[child?.id!];
 
             return (

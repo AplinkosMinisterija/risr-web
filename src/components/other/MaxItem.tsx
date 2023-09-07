@@ -21,15 +21,18 @@ const MaxItem = ({ value }: { value: string }) => {
   };
 
   return (
-    <Container>
-      <IconContainer>
-        <StyledIcon name={valueToIconName[parsedValue]} />
-        <InnerContainer>
-          <Value>{parsedValue}</Value>
-          <Description>{Text[parsedValue]}</Description>
-        </InnerContainer>
-      </IconContainer>
-    </Container>
+    <>
+      <Container>
+        <IconContainer>
+          <StyledIcon name={valueToIconName[parsedValue]} />
+          <InnerContainer>
+            <Value>{parsedValue}</Value>
+            <Description>{Text[parsedValue]}</Description>
+          </InnerContainer>
+          <InfoIcon name="info" />
+        </IconContainer>
+      </Container>
+    </>
   );
 };
 
@@ -43,6 +46,15 @@ const Container = styled.div`
   background-color: white;
   border: 1px solid #cdd5df;
   border-radius: 4px;
+  min-width: 300px;
+  justify-content: center;
+`;
+
+const InfoIcon = styled(Icon)`
+  font-size: 2.8rem;
+  position: absolute;
+  color: #697586;
+  cursor: pointer;
 `;
 
 const InnerContainer = styled.div`

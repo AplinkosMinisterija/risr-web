@@ -175,6 +175,7 @@ const RenderTable = ({
                 {Object.keys(is).map((key) => (
                   <IsItem name={key} value={is[key]} />
                 ))}
+                <InfoIcon name="info" />
               </IsContainer>
             )}
 
@@ -526,4 +527,10 @@ const StyledIcon = styled(Icon)`
   @media ${device.mobileL} {
     margin: 0;
   }
+`;
+
+const InfoIcon = styled(Icon)`
+  font-size: 2.8rem;
+  color: #697586;
+  cursor: pointer;
 `;
