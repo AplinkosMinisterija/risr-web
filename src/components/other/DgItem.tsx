@@ -27,6 +27,7 @@ const DgItem = ({ name, value }: { name: string; value: string }) => {
           </Description>
         </Column>
       </Row>
+      <InfoIcon name="info" />
     </Container>
   );
 };
@@ -63,7 +64,7 @@ const Container = styled.div`
   border: 1px solid #cdd5df;
   border-radius: 4px;
   opacity: 1;
-  padding: 12px 34px;
+  padding: 18px 34px;
   max-width: 297px;
   position: relative;
 `;
