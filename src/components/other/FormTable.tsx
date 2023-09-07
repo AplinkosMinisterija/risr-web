@@ -324,6 +324,7 @@ const RenderTable = ({
                         <Button
                           variant={ButtonColors.TRANSPARENT}
                           onClick={() => setCurrent({})}
+                          color="black"
                           type="button"
                         >
                           {buttonsTitles.cancel}
