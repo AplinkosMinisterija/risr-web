@@ -1,11 +1,11 @@
-import { isEmpty } from "lodash";
+import { isEmpty, map } from "lodash";
 import { NavigateFunction } from "react-router-dom";
 import { toast } from "react-toastify";
 import { default as Api } from "../api";
 import { FilterConfig } from "../components/other/DynamicFilter/Filter";
 import { Profile } from "../types";
 import { RolesTypes } from "./constants";
-import { validationTexts } from "./texts";
+import { roleLabels, validationTexts } from "./texts";
 
 export const handleAlert = (responseError?: string) => {
   toast.error(
@@ -20,6 +20,12 @@ export const handleAlert = (responseError?: string) => {
     }
   );
 };
+
+export const getRolesTypes = () =>
+  map(RolesTypes, (role) => ({
+    id: role,
+    label: roleLabels[role]
+  }));
 
 export const handleSuccess = (message: string) => {
   toast.success(message, {
