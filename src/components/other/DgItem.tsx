@@ -1,23 +1,17 @@
 import styled from "styled-components";
+import { valueToLevelIcon } from "../../utils/texts";
 import Icon from "./Icons";
 
 const DgItem = ({ name, value }: { name: string; value: string }) => {
   const parsedValue = parseInt(value);
 
-  const valueToIconName = {
-    0: "level0",
-    1: "level1",
-    2: "level2",
-    3: "level3",
-    4: "level4"
-  };
   return (
     <Container>
       <Row>
         <StyledIcon
           width="120"
           height="100"
-          name={valueToIconName[parsedValue]}
+          name={valueToLevelIcon[parsedValue]}
         />
         <Column>
           <Name>{name.toUpperCase()}</Name>

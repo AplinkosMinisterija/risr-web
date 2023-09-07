@@ -1,33 +1,18 @@
 import styled from "styled-components";
+import { KVPText, valueToLineIcon } from "../../utils/texts";
 import Icon from "./Icons";
 
 const MaxItem = ({ value }: { value: string }) => {
   const parsedValue = parseInt(value);
 
-  const valueToIconName = {
-    0: "line0",
-    1: "line4",
-    2: "line3",
-    3: "line2",
-    4: "line1"
-  };
-
-  const Text = {
-    0: "Nenurodytas poveikio lygis",
-    1: "Aukštas poveikio lygis",
-    2: "Vidutinis poveikio lygis",
-    3: "Vidutinis poveikio lygis",
-    4: "Žemas poveikio lygis"
-  };
-
   return (
     <>
       <Container>
         <IconContainer>
-          <StyledIcon name={valueToIconName[parsedValue]} />
+          <StyledIcon name={valueToLineIcon[parsedValue]} />
           <InnerContainer>
             <Value>{parsedValue}</Value>
-            <Description>{Text[parsedValue]}</Description>
+            <Description>{KVPText[parsedValue]}</Description>
           </InnerContainer>
           <InfoIcon name="info" />
         </IconContainer>

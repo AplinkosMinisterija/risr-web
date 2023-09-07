@@ -1,36 +1,14 @@
 import styled from "styled-components";
+import {
+  BackgroundColor,
+  nameColor,
+  shortNameToFullName,
+  valueToKVPIcon
+} from "../../utils/texts";
 import Icon from "./Icons";
 
 const IsItem = ({ name, value }: { name: string; value: string }) => {
   const parsedValue = parseInt(value);
-
-  const valueToIconName = {
-    k: "min",
-    v: "medium",
-    p: "max"
-  };
-
-  const shortNameToFullName = {
-    k: "Konfidencialumas",
-    v: "Vientisumas",
-    p: "Prieinamumas"
-  };
-
-  const nameColor = {
-    0: "gray",
-    1: "#E73F76",
-    2: "#FF9A3E",
-    3: "#FF9A3E",
-    4: "#14A166"
-  };
-
-  const BackgroundColor = {
-    0: "gray",
-    1: "#E73F761A",
-    2: "#FF9A3E1A",
-    3: "#FF9A3E1A",
-    4: "#14A1661A"
-  };
 
   return (
     <Container>
@@ -38,7 +16,7 @@ const IsItem = ({ name, value }: { name: string; value: string }) => {
         <IconContainer color={BackgroundColor[parsedValue]}>
           <StyledIcon
             color={nameColor[parsedValue]}
-            name={valueToIconName[name]}
+            name={valueToKVPIcon[name]}
           />
         </IconContainer>
         <Column>

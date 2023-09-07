@@ -1,6 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Group } from "../../types";
+import {
+  BackgroundColor,
+  KVPText,
+  nameColor,
+  valueToLevelIcon
+} from "../../utils/texts";
 import Icon from "./Icons";
 
 const CombinedContainer = ({
@@ -28,38 +34,6 @@ const CombinedContainer = ({
 
   const parsedParent = parseInt(parent);
 
-  const nameColor = {
-    0: "gray",
-    1: "#E73F76",
-    2: "#FF9A3E",
-    3: "#FF9A3E",
-    4: "#14A166"
-  };
-
-  const BackgroundColor = {
-    0: "gray",
-    1: "#E73F761A",
-    2: "#FF9A3E1A",
-    3: "#FF9A3E1A",
-    4: "#14A1661A"
-  };
-
-  const Text = {
-    0: "Nenurodytas poveikio lygis",
-    1: "Aukštas poveikio lygis",
-    2: "Vidutinis poveikio lygis",
-    3: "Vidutinis poveikio lygis",
-    4: "Žemas poveikio lygis"
-  };
-
-  const valueToIconName = {
-    0: "level0",
-    1: "level1",
-    2: "level2",
-    3: "level3",
-    4: "level4"
-  };
-
   return (
     <Container>
       <Row>
@@ -74,8 +48,8 @@ const CombinedContainer = ({
         </RightCircle>
         <Column>
           <LevelRow>
-            <Icon width="40" height="30" name={valueToIconName[childValue]} />
-            <LevelDescription>{Text[childValue]}</LevelDescription>
+            <Icon width="40" height="30" name={valueToLevelIcon[childValue]} />
+            <LevelDescription>{KVPText[childValue]}</LevelDescription>
           </LevelRow>
           <Description>{currentChild.name}</Description>
         </Column>

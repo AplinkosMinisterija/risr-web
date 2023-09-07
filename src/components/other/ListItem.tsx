@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { device } from "../../styles";
 import { Group } from "../../types";
 import { handleShowNumber } from "../../utils/functions";
+import { nameColor, valueToKVPIcon } from "../../utils/texts";
 import Icon from "./Icons";
 
 const ListItem = ({
@@ -15,20 +16,6 @@ const ListItem = ({
   items: { [key: string]: any };
 }) => {
   const [expand, setExpand] = useState(false);
-
-  const valueToIconName = {
-    k: "max",
-    v: "medium",
-    p: "min"
-  };
-
-  const nameColor = {
-    0: "gray",
-    1: "#E73F76",
-    2: "#FF9A3E",
-    3: "#FF9A3E",
-    4: "#14A166"
-  };
 
   const item = groupInfo[group.id!];
   const parsedK = parseInt(item?.k);
@@ -45,7 +32,7 @@ const ListItem = ({
               width="20"
               height="14"
               color={nameColor[parsedK]}
-              name={valueToIconName.k}
+              name={valueToKVPIcon.k}
             />
             <Name color={nameColor[parsedK]}>{item?.k}</Name>
           </IconRow>
@@ -54,7 +41,7 @@ const ListItem = ({
               width="20"
               height="14"
               color={nameColor[parsedV]}
-              name={valueToIconName.v}
+              name={valueToKVPIcon.v}
             />
             <Name color={nameColor[parsedV]}>{item?.v}</Name>
           </IconRow>
@@ -63,7 +50,7 @@ const ListItem = ({
               width="20"
               height="14"
               color={nameColor[parsedP]}
-              name={valueToIconName.p}
+              name={valueToKVPIcon.p}
             />
             <Name color={nameColor[parsedP]}>{item?.p}</Name>
           </IconRow>
