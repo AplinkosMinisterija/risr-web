@@ -1,47 +1,23 @@
+import { useMediaQuery } from "@material-ui/core";
 import { FieldArray, Formik } from "formik";
 import { isEmpty } from "lodash";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import { device } from "../../styles";
 import { Group } from "../../types";
-
-import { getMaxValue, handleShowNumber, isNumber } from "../../utils/functions";
+import { getMaxValue, isNumber } from "../../utils/functions";
 import { buttonsTitles } from "../../utils/texts";
 import { validateFormRowInfo } from "../../utils/validation";
 import Button, { ButtonColors } from "../buttons/Button";
-import SimpleButton from "../fields/SimpleButton";
 import TextField from "../fields/TextField";
+import CombinedContainer from "./CombinedContainer";
+import DgItem from "./DgItem";
+import FormItem from "./FormItem";
 import Icon from "./Icons";
+import IsItem from "./IsItem";
+import ListItem from "./ListItem";
+import MaxItem from "./MaxItem";
 import Modal from "./Modal";
-
-const RenderKVP = () => {
-  const items = ["K", "V", "P"];
-  return (
-    <>
-      {items.map((group, index) => {
-        return <TH key={index}>{group}</TH>;
-      })}
-    </>
-  );
-};
-
-const RenderItems = ({ groups }: { groups: Group[] }) => {
-  return (
-    <>
-      {groups.map((group, index) => {
-        const colLength = isEmpty(group.children)
-          ? 3
-          : group?.children!?.length * 3 + 3;
-
-        return (
-          <TH colSpan={colLength} key={index}>
-            {group.name}
-          </TH>
-        );
-      })}
-    </>
-  );
-};
 
 const RenderTable = ({
   groups,
@@ -51,15 +27,12 @@ const RenderTable = ({
   items?: { name: string; items: any }[];
 }) => {
   const innerItems = items?.map((item) => item?.items);
+  const isMobile = useMediaQuery(device.mobileL);
+  const itemsEmpty = isEmpty(innerItems);
+
   const [current, setCurrent] = useState<any>({});
+  const [tabIndex, setTabIndex] = useState<any>(0);
   const arrayHelperRef = useRef<any>(null);
-
-  const setKVP = (input: string, onChange) => {
-    const pattern = /^(?:[0-4]|)$/;
-    if (!pattern.test(input)) return;
-
-    onChange(input);
-  };
 
   const handleGetRowMaxes = () => {
     if (!innerItems) return [];
@@ -156,8 +129,7 @@ const RenderTable = ({
 
       return {
         ...prev,
-        [group.id!]: columnMax,
-        ...childrenGroupMaxColumns
+        [group.id!]: { parent: columnMax, ...childrenGroupMaxColumns }
       };
     }, {});
 
@@ -177,174 +149,138 @@ const RenderTable = ({
         };
       }, {} as any);
 
+  const dg = rowMaxes?.items?.[tabIndex]?.DGMax;
+
+  const is = rowMaxes?.ISMax;
+  const max = rowMaxes?.max;
+
   return (
     <>
-      <ButtonContainer>
-        <SimpleButton
-          type="button"
-          onClick={() => setCurrent({ name: "", items: getEmptyItem() })}
+      {itemsEmpty ? (
+        <EmptyStateContainer
+          onClick={() => {
+            setCurrent({ name: "", items: getEmptyItem() });
+          }}
         >
-          + Pridėti naujus valstybės informacinį išteklius sudarančius duomenis
-          arba jų grupę.
-        </SimpleButton>
-      </ButtonContainer>
-      <MainContainer>
-        <TableContainer>
-          <Table>
-            <THEAD>
-              <TableRow>
-                <TH maxWidth={"100px"} rowSpan={3} />
-                <TH rowSpan={3}>
-                  {
-                    "Valstybės informacinį išteklių sudarantys duomenys ar jų grupės"
-                  }
-                </TH>
-                <RenderItems groups={groups} />
-                <TH colSpan={3} rowSpan={2}>
-                  {
-                    "Maksimalus valstybės informacinį išteklių sudarančių duomenų ar jų grupės KVP pažeidimo poveikio lygis"
-                  }
-                </TH>
-                <TH colSpan={3} rowSpan={2}>
-                  {
-                    "Maksimalus valstybės informacinį išteklių sudarančių duomenų ar jų grupių KVP pažeidimo poveikio lygis informacinės sistemos, kurioje jie tvarkomi, lygmenius"
-                  }
-                </TH>
-                <TH colSpan={1} rowSpan={3}>
-                  {
-                    "Valstybės informacinių išteklių rūšis, kuriai priskiriami valstybės informacinį išteklių sudarantys duomenys ir informacinė sistema, kurioje jie tvarkomi"
-                  }
-                </TH>
-              </TableRow>
-              <TableRow>
-                {groups.map((group) => (
-                  <RenderItems
-                    groups={[
-                      ...group.children!,
-                      {
-                        name: `Bendras poveikis sričiai ${group.name.slice(
-                          0,
-                          2
-                        )}`
-                      }
-                    ]}
-                  />
+          <TextEmptyState>
+            Pridėti naujus valstybės informacinį išteklius sudarančius duomenis
+            arba jų grupę
+          </TextEmptyState>
+        </EmptyStateContainer>
+      ) : (
+        <>
+          <DgContainer>
+            {is && (
+              <IsContainer>
+                {Object.keys(is).map((key) => (
+                  <IsItem name={key} value={is[key]} />
                 ))}
-              </TableRow>
-              <TableRow>
-                {groups.map((group) =>
-                  [...group.children!, null].map(() => <RenderKVP />)
-                )}
-                <RenderKVP />
-                <RenderKVP />
-              </TableRow>
-            </THEAD>
-            <tbody>
-              {!isEmpty(items) &&
-                items!.map((item, index) => {
-                  const groupInfo = rowMaxes.items[index];
-                  const items = item.items;
-                  return (
-                    <TableRow>
-                      <TD maxWidth={"100px"}>
-                        <EditIconContainer>
-                          <div
-                            onClick={() => {
-                              setCurrent({ index, ...item });
-                            }}
-                          >
-                            <StyledEditIcon name="edit" />
-                          </div>
-                          <div
-                            onClick={() => {
-                              arrayHelperRef?.current &&
-                                arrayHelperRef?.current?.remove(index);
-                            }}
-                          >
-                            <StyledDeleteIcon name="deleteItem" />
-                          </div>
-                        </EditIconContainer>
-                      </TD>
-                      <TD>{item?.name}</TD>
-                      {groups.map((group) => {
-                        return (
-                          <>
-                            {group.children?.map((child, i) => {
-                              const childItem = items[child?.id!];
+              </IsContainer>
+            )}
 
-                              return (
-                                <>
-                                  <TD>{handleShowNumber(childItem?.k)}</TD>
-                                  <TD>{handleShowNumber(childItem?.v)}</TD>
-                                  <TD>{handleShowNumber(childItem?.p)}</TD>
-                                </>
-                              );
-                            })}
-                            <TD>{groupInfo[group.id!]?.k || "-"}</TD>
-                            <TD>{groupInfo[group.id!]?.v || "-"}</TD>
-                            <TD>{groupInfo[group.id!]?.p || "-"}</TD>
-                          </>
-                        );
-                      })}
-                      <TD>{groupInfo.DGMax?.k || "-"}</TD>
-                      <TD>{groupInfo.DGMax?.v || "-"}</TD>
-                      <TD>{groupInfo.DGMax?.p || "-"}</TD>
-                      {index === 0 && (
-                        <>
-                          <TD>{rowMaxes.ISMax?.k || "-"} </TD>
-                          <TD>{rowMaxes.ISMax?.v || "-"}</TD>
-                          <TD>{rowMaxes.ISMax?.p || "-"}</TD>
-                          <TD>{rowMaxes.max || "-"}</TD>
-                        </>
-                      )}
-                    </TableRow>
-                  );
-                })}
+            {max && <MaxItem value={max} />}
+          </DgContainer>
 
-              <TableRow>
-                <EndTD maxWidth={"100px"} />
+          <CombinedRow>
+            {groups.map((group) => {
+              return (
+                <CombinedContainer
+                  group={group}
+                  groupInfo={columnMaxes[group?.id!]}
+                />
+              );
+            })}
+          </CombinedRow>
+          <MiniTextEmptyState
+            onClick={() => {
+              setCurrent({ name: "", items: getEmptyItem() });
+            }}
+          >
+            Pridėti naujus valstybės informacinį išteklius sudarančius duomenis
+            arba jų grupę
+          </MiniTextEmptyState>
+          <TabContainer>
+            {items?.map((item, index) => {
+              return (
+                <TabButton
+                  onClick={() => setTabIndex(index)}
+                  disabled={false}
+                  isActive={index === tabIndex}
+                >
+                  {item.name}
+                </TabButton>
+              );
+            })}
+          </TabContainer>
 
-                <EndTD>
-                  {
-                    "Maksimalus VII sudarančių duomenų ar jų grupių poveikio lygis sričiai ir jos pogrupiams"
-                  }
-                </EndTD>
-                {groups.map((group) => {
-                  return (
-                    <>
-                      {group.children?.map((child) => {
-                        return (
-                          <EndTD colSpan={3}>
-                            {columnMaxes[child.id!] || "-"}
-                          </EndTD>
-                        );
-                      })}
-                      <EndTD colSpan={3}>{columnMaxes[group.id!] || "-"}</EndTD>
-                    </>
-                  );
-                })}
-              </TableRow>
-            </tbody>
-          </Table>
-        </TableContainer>
-      </MainContainer>
-      <Modal onClose={() => setCurrent({})} visible={!isEmpty(current)}>
-        <FieldArray
-          name={`items`}
-          render={(arrayHelpers) => {
-            arrayHelperRef.current = arrayHelpers;
+          {!isEmpty(items) && (
+            <ItemRow>
+              <ItemContainer>
+                <ItemName>{items?.[tabIndex].name}</ItemName>{" "}
+                <div
+                  onClick={() => {
+                    setCurrent({ index: tabIndex, ...items?.[tabIndex] });
+                  }}
+                >
+                  <StyledEditIcon name="edit" />
+                </div>
+              </ItemContainer>
+              <DeleteButton
+                onClick={() => {
+                  setTabIndex(0);
+                  arrayHelperRef?.current &&
+                    arrayHelperRef?.current?.remove(tabIndex);
+                }}
+                variant={ButtonColors.TRANSPARENT}
+                type="button"
+                leftIcon={<StyledIcon name="deleteItem" />}
+                buttonPadding="6px 8px"
+              >
+                {!isMobile ? buttonsTitles.delete : ""}
+              </DeleteButton>
+            </ItemRow>
+          )}
 
-            const handleSubmit = (values) => {
-              if (isNumber(current.index)) {
-                arrayHelpers.replace(current?.index, values);
-              } else {
-                arrayHelpers.push(values);
-              }
+          {dg && (
+            <DgContainer>
+              {Object.keys(dg).map((key) => {
+                return <DgItem name={key} value={dg[key]} />;
+              })}
+            </DgContainer>
+          )}
 
-              setCurrent({});
-            };
+          {!isEmpty(items) && (
+            <ItemsContainer>
+              {groups.map((group) => {
+                return (
+                  <ListItem
+                    group={group}
+                    groupInfo={rowMaxes.items[tabIndex]}
+                    items={items?.[tabIndex].items}
+                  />
+                );
+              })}
+            </ItemsContainer>
+          )}
+        </>
+      )}
+      <FieldArray
+        name={`items`}
+        render={(arrayHelpers) => {
+          arrayHelperRef.current = arrayHelpers;
 
-            return (
+          const handleSubmit = (values) => {
+            if (isNumber(current.index)) {
+              arrayHelpers.replace(current?.index, values);
+            } else {
+              arrayHelpers.push(values);
+            }
+
+            setCurrent({});
+          };
+
+          return (
+            <Modal onClose={() => setCurrent({})} visible={!isEmpty(current)}>
               <Formik
                 validateOnChange={false}
                 enableReinitialize={true}
@@ -368,73 +304,25 @@ const RenderTable = ({
                       <TextField
                         label={"Pavadinimas"}
                         value={values.name}
-                        error={errors?.name}
+                        error={errors?.name!}
                         name={"name"}
                         onChange={(email) => setFieldValue(`name`, email)}
                       />
                       {groups.map((group) => {
                         return (
-                          <FormTitle>
-                            {group.name}
-                            {!isEmpty(group.children) &&
-                              group.children?.map((item) => {
-                                return (
-                                  <>
-                                    <FormSubTitle>{item.name}</FormSubTitle>
-                                    <FormRow columns={3}>
-                                      <TextField
-                                        label={"K"}
-                                        value={values.items[item.id!].k}
-                                        name={"k"}
-                                        error={errors?.items?.[item.id!]?.k}
-                                        onChange={(k) =>
-                                          setKVP(k, (k) =>
-                                            setFieldValue(
-                                              `items.${[item.id!]}.k`,
-                                              k
-                                            )
-                                          )
-                                        }
-                                      />
-                                      <TextField
-                                        label={"V"}
-                                        value={values.items[item.id!].v}
-                                        error={errors?.items?.[item.id!]?.v}
-                                        name={"v"}
-                                        onChange={(v) =>
-                                          setKVP(v, (v) =>
-                                            setFieldValue(
-                                              `items.${[item.id!]}.v`,
-                                              v
-                                            )
-                                          )
-                                        }
-                                      />
-                                      <TextField
-                                        label={"P"}
-                                        value={values.items[item.id!].p}
-                                        error={errors?.items?.[item.id!]?.p}
-                                        name={"p"}
-                                        onChange={(p) =>
-                                          setKVP(p, (p) =>
-                                            setFieldValue(
-                                              `items.${[item.id!]}.p`,
-                                              p
-                                            )
-                                          )
-                                        }
-                                      />
-                                    </FormRow>
-                                  </>
-                                );
-                              })}
-                          </FormTitle>
+                          <>
+                            <FormItem
+                              group={group}
+                              values={values}
+                              errors={errors}
+                              setFieldValue={setFieldValue}
+                            />
+                          </>
                         );
                       })}
                       <ButtonRow>
                         <Button
                           variant={ButtonColors.TRANSPARENT}
-                          color={"black"}
                           onClick={() => setCurrent({})}
                           type="button"
                         >
@@ -451,44 +339,15 @@ const RenderTable = ({
                   );
                 }}
               </Formik>
-            );
-          }}
-        />
-      </Modal>
+            </Modal>
+          );
+        }}
+      />
     </>
   );
 };
 
 export default RenderTable;
-
-const TableContainer = styled.div`
-  width: 100%;
-`;
-
-const StyledEditIcon = styled(Icon)`
-  font-size: 1.8rem;
-  color: #697586;
-  cursor: pointer;
-`;
-
-const StyledDeleteIcon = styled(Icon)`
-  cursor: pointer;
-  font-size: 1.8rem;
-  color: ${({ theme }) => theme.colors.danger};
-`;
-const EditIconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  position: relative;
-`;
-
-const ButtonContainer = styled.div`
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: flex-end;
-`;
 
 const Container = styled.div`
   background-color: white;
@@ -517,12 +376,13 @@ const Container = styled.div`
   }
 `;
 
-export const FormRow = styled.div<{ columns?: number }>`
+const CombinedRow = styled.div`
   display: grid;
-  grid-template-columns: repeat(${({ columns }) => columns || 3}, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
   @media ${device.mobileL} {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -551,12 +411,6 @@ const IconContainer = styled.div`
   top: 9px;
 `;
 
-const FormTitle = styled.div`
-  font-size: 1.6rem;
-  color: #231f20;
-  margin-top: 20px;
-`;
-
 const Title = styled.div`
   font-size: 1.8rem;
   font-weight: bold;
@@ -564,49 +418,111 @@ const Title = styled.div`
   margin: 20px 0;
 `;
 
-const FormSubTitle = styled.div`
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-top: 10px;
-  color: #231f20;
+const ItemsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 `;
 
-const TableRow = styled.tr``;
+const DgContainer = styled.div`
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 22px;
+`;
 
-const Table = styled.table`
-  border-collapse: collapse;
+const ItemContainer = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+`;
+
+const ItemRow = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+`;
+
+const TabContainer = styled.div`
+  display: flex;
+  flex: 1;
+  border-bottom: 1px #c4c4c4 solid;
+  margin-bottom: 24px;
+  white-space: nowrap;
+  overflow-x: auto;
+`;
+
+const TabButton = styled.div<{ isActive: boolean; disabled: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  border-bottom: ${({ isActive, theme }) =>
+    `2px ${isActive ? theme.colors.primary : "transparent"} solid`};
+  margin-right: 24px;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+
+  font-size: 1.4rem;
+  color: #121926;
+`;
+
+const ItemName = styled.div`
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #121926;
+`;
+
+const IsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #cdd5df;
+  border-radius: 4px;
+  gap: 63px;
   width: 100%;
-  margin-bottom: 20px;
-`;
-const TH = styled.th<{ maxWidth?: string }>`
-  background-color: #f2f2f2;
-  border: 2px solid black;
-  text-align: center;
-  padding: 10px;
-  min-width: ${({ maxWidth = "200px" }) => maxWidth};
-`;
-const THEAD = styled.thead`
-  width: 100%;
 `;
 
-const TD = styled.td<{ maxWidth?: string }>`
-  background-color: #f2f2f2;
-  border: 2px solid black;
-  text-align: center;
-  padding: 10px;
-  min-width: ${({ maxWidth = "200px" }) => maxWidth};
+const EmptyStateContainer = styled.div`
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const EndTD = styled.td<{ maxWidth?: string }>`
-  background-color: #f2f2f2;
-  border: 2px solid black;
-  border-top: 4px solid black;
-  text-align: center;
-  padding: 10px;
-
-  min-width: ${({ maxWidth = "200px" }) => maxWidth};
+const TextEmptyState = styled.div`
+  font-size: 2rem;
+  color: #0862ab;
+  cursor: pointer;
 `;
 
-const MainContainer = styled.div`
-  overflow-x: scroll;
+const MiniTextEmptyState = styled.div`
+  font-size: 1.4rem;
+  color: #0862ab;
+  cursor: pointer;
+`;
+
+const StyledEditIcon = styled(Icon)`
+  font-size: 1.8rem;
+  color: #697586;
+  cursor: pointer;
+`;
+
+const DeleteButton = styled(Button)`
+  button {
+    border-color: ${({ theme }) => theme.colors.danger};
+    color: ${({ theme }) => theme.colors.danger};
+  }
+  min-width: fit-content;
+`;
+const StyledIcon = styled(Icon)`
+  cursor: pointer;
+  font-size: 1.8rem;
+  color: ${({ theme }) => theme.colors.danger};
+  margin-right: 8px;
+  @media ${device.mobileL} {
+    margin: 0;
+  }
 `;
