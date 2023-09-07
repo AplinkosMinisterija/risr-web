@@ -130,11 +130,7 @@ export enum Resources {
   MY_FORMS = "forms/my",
   HISTORY = "history",
   CREATED_BY = "createdBy",
-  REQUESTS = "requests",
-  MY_REQUESTS = "requests/my",
-  DELETED_REQUESTS = "requests/deleted",
-  UPLOAD = "upload",
-  SEARCH = "objects/search"
+  UPLOAD = "upload"
 }
 
 export enum Populations {
@@ -170,99 +166,13 @@ export const colorsByStatus = {
   [StatusTypes.REJECTED]: TagColors.PINK
 };
 
-const mapsHost = process.env.REACT_APP_MAPS_HOST || "https://maps.biip.lt";
-export const Url = {
-  DRAW: `${mapsHost}/edit`,
-  UETK: `${mapsHost}/uetk`
-};
-
-export enum Units {
-  CENTIMETER = "CENTIMETER",
-  METER = "METER",
-  KILOWATT = "KILOWATT",
-  KILOMETER = "KILOMETER",
-  THOUSANDS_PER_METER = "THOUSANDS_PER_METER",
-  HECTARES = "HECTARES",
-  CUBIC_METER = "CUBIC_METER",
-  SQUARE_METER = "SQUARE_METER"
-}
-
 export enum TableItemWidth {
   MEDIUM = "76px",
   SMALL = "40px",
   LARGE = "30px"
 }
 
-export enum FormDataFields {
-  poolArea = "poolArea",
-  waterVolume = "waterVolume",
-  waterLevelAltitude = "waterLevelAltitude",
-  maxWaterDepth = "maxWaterDepth",
-  avgWaterDepth = "avgWaterDepth",
-  maxWaterDepthNPL = "maxWaterDepthNPL",
-  avgWaterDepthNPL = "avgWaterDepthNPL",
-  usefulWaterVolume = "usefulWaterVolume",
-  distanceFromRiverMouth = "distanceFromRiverMouth",
-  pondedRiver = "pondedRiver",
-  pondHeight = "pondHeight",
-  maxPondHeight = "maxPondHeight",
-  normalPondLevelNPL = "normalPondLevelNPL",
-  constructionYear = "constructionYear",
-  olderWaterBody = "olderWaterBody",
-  earthDamWidth = "earthDamWidth",
-  earthDamLength = "earthDamLength",
-  river = "river",
-  lake = "lake",
-  environmentalDebit = "environmentalDebit",
-  fishPassDebit = "fishPassDebit",
-  minDebit = "minDebit",
-  maxDebit = "maxDebit",
-  qvid = "qvid",
-  q95 = "q95",
-  q1 = "q1",
-  q5 = "q5",
-  type = "type",
-  power = "power",
-  maxPressureHeight = "maxPressureHeight",
-  name = "name",
-  cadastralId = "cadastralId",
-  category = "category",
-  subPool = "subPool",
-  olderRiver = "olderRiver",
-  mouthCenterCoordinates = "mouthCenterCoordinates",
-  olderRiverBank = "olderRiverBank",
-  inflowOrder = "inflowOrder",
-  riverLength = "riverLength",
-  avgDebitQGrid = "avgDebitQGrid",
-  otherData = "otherData",
-  centerCoordinates = "centerCoordinates",
-  surfaceArea = "surfaceArea",
-  lakeLength = "lakeLength",
-  lakeSquareNumber = "lakeSquareNumber",
-  lakeNumberInSquare = "lakeNumberInSquare",
-  lakeWidth = "lakeWidth",
-  bankLineLength = "bankLineLength",
-  directRiver = "directRiver",
-  avgPerennialDebit95 = "avgPerennialDebit95",
-  maxPondPressureHeight = "maxPondPressureHeight",
-  hydrostaticId = "hydrostaticId",
-  fishPassProjectDebit = "fishPassProjectDebit"
-}
-
 export enum ServerErrorCodes {
   NOT_FOUND = "404",
   NO_PERMISSION = "401"
-}
-
-export enum DeliveryTypes {
-  EMAIL = "EMAIL",
-  REGULAR_MAIL = "REGULAR_MAIL",
-  WITHDRAW = "WITHDRAW"
-}
-
-export enum PurposeTypes {
-  TERRITORIAL_PLANNING_DOCUMENT = "TERRITORIAL_PLANNING_DOCUMENT",
-  TECHNICAL_PROJECT = "TECHNICAL_PROJECT",
-  SCIENTIFIC_INVESTIGATION = "SCIENTIFIC_INVESTIGATION",
-  OTHER = "OTHER"
 }

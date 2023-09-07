@@ -1,19 +1,4 @@
-import {
-  DeliveryTypes,
-  FishPassType,
-  FormObjectType,
-  FormProviderType,
-  FormType,
-  HistoryTypes,
-  HydroPowerPlantType,
-  PurposeTypes,
-  RolesTypes,
-  ServerErrors,
-  StatusTypes,
-  SubPoolTypes,
-  Units,
-  WaterExcessCulvertType
-} from "./constants";
+import { RolesTypes, ServerErrors } from "./constants";
 
 export const emptyStateLabels = {
   form: "Jūs neturite pateikę anketų . Sukurkite ",
@@ -166,19 +151,7 @@ export const formLabels = {
   profileInfo: "Profilio informacija",
   additionalInfo: "Papildoma informacija",
   contactInfo: "Prašymo teikėjo kontaktinė informacija",
-  documents: "Dokumentai",
-  infoAboutObject: "Informacija apie objektą",
-  infoAboutUser: "Informacija apie naudotoją",
-  selectRiverMouth: "Pažymėkite upės žiotis",
-  selectCenter: "Pažymėkite centro koordinates",
-  uploadFiles: "Įkelkite papildomus dokumentus",
-  otherInfo: "Kita papildoma informacija",
-  deregistration: "Išregistravimo pagrindas",
-  cadastralObjects: "Kadastro objektai",
-  avgPerennialDebit: "VIDUTINIS DAUGIAMETIS VANDENS DEBITAS",
-  avgPerennialDebit95: "Vidutinis daugiametis debitas 95 %",
-  maxSpringFloodDebit: "MAKSIMALUS PAVASARIO POTVYNIO VANDENS DEBITAS",
-  springDebit1: "Pavasario potvynio (lietaus poplūdžio) 1 % debitas"
+  documents: "Dokumentai"
 };
 export const inputLabels = {
   generating: "Išrašas kuriamas",
@@ -223,159 +196,64 @@ export const inputLabels = {
   qualificationDocuments:
     "Įkelkite duomenų tikrinimo tikslą ir/ar jūsų kvalifikaciją pagrindžiančius dokumentus",
   quantity: "vnt.",
-  noOptions: "Nėra pasirinkimų",
-  objectType: "Objekto kategorija",
-  providerType: "Duomenų teikėjo statusas objekto atžvilgiu",
-  formType: "Teikiami duomenys dėl",
-  objectName: "Pavadinimas",
-  objects: "Objektai",
-  objectNameOrCode: "Pavadinimas arba kodas",
-  agreeWithConditions: "Su duomenų teikimo sąlygomis susipažinau ir sutinku.",
-  providedByFullName: "Teikėjo Vardas, Pavardė / Įmonės pavadinimas",
-  poolArea: "Baseino plotas",
-  waterVolume: "Vandens tūris",
-  waterLevelAltitude: "Vandens lygio altitudė",
-  maxWaterDepth: "Maksimalus vandens gylis",
-  avgWaterDepth: "Vidutinis vandens gylis",
-  usefulWaterVolume: "Naudingas vandens tūris",
-  distanceFromRiverMouth: "Atstumas nuo upės žiočių",
-  normalPondLevelNPL: "Normaliojo patvankos lygio aukštis (NPL)",
-  maxWaterDepthNPL: "Maksimalus vandens gylis esant NPL",
-  avgWaterDepthNPL: "Vidutinis vandens gylis esant NPL",
-  pondedRiver: "Patvenktos upės pavadinimas",
-  constructionYear: "Pastatymo metai",
-  river: "Upės pavadinimas",
-  lake: "Tvenkinio pavadinimas",
-  earthDamWidth: "Žemių užtvankos ilgis",
-  earthDamLength: "Žemių užtvankos plotis",
-  maxPondHeight: "Maksimalus patvankos aukštis",
-  maxPondPressureHeight: "Maksimalus patvankos slėgio aukštis, m",
-  pondHeight: "Patvankos aukštis",
-  type: "Tipas",
-  environmentalDebit: "Gamtosauginis vandens debitas",
-  minDebit: "Min. vasaros – rudens laikotarpio debitas Q95%",
-  maxDebit: "Maks. vandens debitas",
-  qvid: "Qvid",
-  q95: "Q95%",
-  q1: "Q1%",
-  q5: "Q5%",
-  olderWaterBody: "Vyresniojo vandens telkinio pavadinimas",
-  power: "Galia",
-  maxPressureHeight: "Maksimalus slėgio aukštis",
-  fishPassDebit: "Žuvų pralaidos debitas",
-  fishPassProjectDebit: "Žuvų pralaidos projektinis debitas",
-  name: "Pavadinimas",
-  cadastralId: "Kadastro identifikavimo kodas",
-  category: "Objekto kategorijos pavadinimas",
-  subPool: "Upės pabaseinis",
-  olderRiver: "Vyresnioji upė",
-  mouthCenterCoordinates:
-    "Žiočių centro  koordinatės LKS 94 koordinačių sistemoje, m",
-  centerCoordinates:
-    "Objekto centro koordinatės LKS-94 koordinačių sistemoje, m",
-  olderRiverBank: "Įtekėjimo į vyresniąją upę krantas",
-  inflowOrder:
-    "Įtekėjimo eiliškumas upės, įtekančios į Baltijos jūrą ar Kuršių marias, atžvilgiu",
-  riverLength: "Upės ilgis geografinis Lietuvos teritorijoje, km",
-  avgDebitQGrid: "Vid. debitas, skaičiuotas pagal qGRID'ą, m³/s",
-  otherData: "Kiti duomenys",
-  surfaceArea: "Vandens paviršiaus plotas Lietuvos teritorijoje geografinis",
-  lakeLength: "Ežero, tvenkinio ilgis",
-  lakeSquareNumber: "Ežero kvadrato numeris",
-  lakeNumberInSquare: "Ežero numeris kvadrate",
-  lakeWidth: "Ežero, tvenkinio vidutinis plotis",
-  bankLineLength: "Kranto linijos ilgis geografinis",
-  directRiver: "Tiesioginė upė"
+  noOptions: "Nėra pasirinkimų"
+};
+
+export const valueToKVPIcon = {
+  k: "min",
+  v: "medium",
+  p: "max"
+};
+
+export const shortNameToFullName = {
+  k: "Konfidencialumas",
+  v: "Vientisumas",
+  p: "Prieinamumas"
+};
+
+export const nameColor = {
+  0: "gray",
+  1: "#E73F76",
+  2: "#FF9A3E",
+  3: "#FF9A3E",
+  4: "#14A166"
+};
+
+export const BackgroundColor = {
+  0: "gray",
+  1: "#E73F761A",
+  2: "#FF9A3E1A",
+  3: "#FF9A3E1A",
+  4: "#14A1661A"
+};
+
+export const valueToLineIcon = {
+  0: "line0",
+  1: "line4",
+  2: "line3",
+  3: "line2",
+  4: "line1"
+};
+
+export const valueToLevelIcon = {
+  0: "level0",
+  1: "level1",
+  2: "level2",
+  3: "level3",
+  4: "level4"
+};
+
+export const KVPText = {
+  0: "Nenurodytas poveikio lygis",
+  1: "Aukštas poveikio lygis",
+  2: "Vidutinis poveikio lygis",
+  3: "Vidutinis poveikio lygis",
+  4: "Žemas poveikio lygis"
 };
 
 export const roleLabels = {
   [RolesTypes.ADMIN]: "Administratorius",
   [RolesTypes.USER]: "Naudotojas"
-};
-
-export const formStatusLabels = {
-  [StatusTypes.CREATED]: "Pateikta",
-  [StatusTypes.SUBMITTED]: "Pateikta pakartotinai",
-  [StatusTypes.RETURNED]: "Grąžinta taisymui",
-  [StatusTypes.REJECTED]: "Atmesta",
-  [StatusTypes.APPROVED]: "Patvirtinta"
-};
-
-export const requestStatusLabels = {
-  [StatusTypes.CREATED]: "Pateiktas",
-  [StatusTypes.SUBMITTED]: "Pateiktas pakartotinai",
-  [StatusTypes.RETURNED]: "Grąžintas taisymui",
-  [StatusTypes.REJECTED]: "Atmestas",
-  [StatusTypes.APPROVED]: "Patvirtintas",
-  [HistoryTypes.FILE_GENERATED]: "Išrašas paruoštas"
-};
-
-export const formObjectTypeLabels = {
-  [FormObjectType.CANAL]: "Kanalas",
-  [FormObjectType.EARTH_DAM]: "Žemių užtvanka",
-  [FormObjectType.FISH_PASS]: "Žuvų perlaida",
-  [FormObjectType.HYDRO_POWER_PLANT]: "Hidroelektrinė",
-  [FormObjectType.ISOLATED_WATER_BODY]:
-    "Nepratekamas dirbtinis paviršinis vandens telkinys",
-  [FormObjectType.NATURAL_LAKE]: "Natūralus ežeras",
-  [FormObjectType.POND]: "Tvenkinys",
-  [FormObjectType.PONDED_LAKE]: "Patvenktas ežeras",
-  [FormObjectType.RIVER]: "Upė",
-  [FormObjectType.WATER_EXCESS_CULVERT]: "Vandens pertekliaus pralaida"
-};
-
-export const formObjectLabelsToType = {
-  Kanalas: FormObjectType.CANAL,
-  "Žemių užtvanka": FormObjectType.EARTH_DAM,
-  "Žuvų perlaida": FormObjectType.FISH_PASS,
-  Hidroelektrinė: FormObjectType.HYDRO_POWER_PLANT,
-  "Nepratekamas dirbtinis paviršinis vandens telkinys":
-    FormObjectType.ISOLATED_WATER_BODY,
-  "Natūralus ežeras": FormObjectType.NATURAL_LAKE,
-  Tvenkinys: FormObjectType.POND,
-  "Patvenktas ežeras": FormObjectType.PONDED_LAKE,
-  Upė: FormObjectType.RIVER,
-  "Vandens pertekliaus pralaida": FormObjectType.WATER_EXCESS_CULVERT
-};
-
-export const waterExcessCulvertTypeLabels = {
-  [WaterExcessCulvertType.TUBULAR]: "Vamzdinė",
-  [WaterExcessCulvertType.SLUICE_REGULATOR]: "Šliuzas reguliatorius",
-  [WaterExcessCulvertType.TOP_STREAM]: "Greitvietė",
-  [WaterExcessCulvertType.TOWER]: "Bokštinė",
-  [WaterExcessCulvertType.THRESHOLD_WITHOUT_CLOSURES]: "Slenkstinė be uždorių",
-  [WaterExcessCulvertType.THRESHOLD_WITH_CLOSURES]: "Slenkstinė su uždorių",
-  [WaterExcessCulvertType.SIPHON]: "Sifoninė",
-  [WaterExcessCulvertType.SHAFT]: "Šachtinė",
-  [WaterExcessCulvertType.OTHER]: "Kita"
-};
-
-export const fishPassTypeLabels = {
-  [FishPassType.POOLS]: "Baseinai",
-  [FishPassType.DENIL]: "DENIL",
-  [FishPassType.SLUICE]: "Šliuzas",
-  [FishPassType.ELEVATOR]: "Liftas",
-  [FishPassType.BYPASS_CANAL]: "Apvedimo kanalas",
-  [FishPassType.OTHER]: "Kita"
-};
-
-export const hydroPowerPlantTypeLabels = {
-  [HydroPowerPlantType.DAM]: "Prieužtvakinė",
-  [HydroPowerPlantType.DERIVATIVE]: "Derivacinė",
-  [HydroPowerPlantType.FURROWS]: "Vagos",
-  [HydroPowerPlantType.OTHER]: "Kita"
-};
-
-export const formProviderTypeLabels = {
-  [FormProviderType.MANAGER]: "Valdytojas",
-  [FormProviderType.OWNER]: "Savininkas",
-  [FormProviderType.OTHER]: "Kitas asmuo"
-};
-
-export const formTypeLabels = {
-  [FormType.NEW]: "Įregistravimo",
-  [FormType.EDIT]: "Redagavimo",
-  [FormType.REMOVE]: "Išregistravimo"
 };
 
 export const validationTexts = {
@@ -441,53 +319,4 @@ export const deleteDescriptionSecondPart = {
 };
 export const queryStrings = {
   draw: "?basemap_selector=true&draw_edit_prop=true&draw_geom=[Point]&draw=true&draw_panel=true&autosave=true"
-};
-
-export const shortMeasurementUnitsLabels = {
-  [Units.CENTIMETER]: "cm",
-  [Units.METER]: "m",
-  [Units.KILOWATT]: "KW",
-  [Units.HECTARES]: "ha",
-  [Units.KILOMETER]: "km",
-  [Units.THOUSANDS_PER_METER]: "tūkst. m",
-  [Units.SQUARE_METER]: "m2"
-};
-
-export const formHistoryLabels = {
-  [HistoryTypes.CREATED]: "Pateikta",
-  [HistoryTypes.UPDATED]: "Pateikta pakartotinai",
-  [HistoryTypes.REJECTED]: "Atmesta",
-  [HistoryTypes.RETURNED]: "Grąžinta taisyti",
-  [HistoryTypes.APPROVED]: "Priimta",
-  [HistoryTypes.DELETED]: "Ištrinta"
-};
-
-export const deliveryTypeLabels = {
-  [DeliveryTypes.EMAIL]: "El. paštu",
-  [DeliveryTypes.REGULAR_MAIL]: "Įprastiniu paštu",
-  [DeliveryTypes.WITHDRAW]: "Atsiimti"
-};
-
-export const purposeTypeLabels = {
-  [PurposeTypes.TERRITORIAL_PLANNING_DOCUMENT]:
-    "Teritorijų planavimo dokumentui",
-  [PurposeTypes.TECHNICAL_PROJECT]: "Techniniam projektui",
-  [PurposeTypes.SCIENTIFIC_INVESTIGATION]: "Moksliniam tyrimui",
-  [PurposeTypes.OTHER]: "Kiti tikslai"
-};
-
-export const subPoolTypeLabels = {
-  [SubPoolTypes.LT1100]: "Nemuno mažųjų intakų (su Nemunu) upių pabaseinis",
-  [SubPoolTypes.LT1111]: "Merkio upės pabaseinis",
-  [SubPoolTypes.LT1120]: "Neries mažųjų intakų (su Nerimi) upių pabaseinis ",
-  [SubPoolTypes.LT1121]: "Žeimenos upės pabaseinis",
-  [SubPoolTypes.LT1122]: "Šventosios upės pabaseinis",
-  [SubPoolTypes.LT1130]: "Nevėžio upės pabaseinis",
-  [SubPoolTypes.LT1140]: "Dubysos upės pabaseinis",
-  [SubPoolTypes.LT1150]: "Šešupės upės pabaseinis",
-  [SubPoolTypes.LT1160]: "Jūros upės pabaseinis",
-  [SubPoolTypes.LT1170]: "Minijos upės pabaseinis",
-  [SubPoolTypes.LT3400]: "Lielupės upės mažųjų intakų pabaseinis",
-  [SubPoolTypes.LT3410]: "Mūšos upės pabaseinis",
-  [SubPoolTypes.LT3420]: "Nemunėlio upės pabaseinis"
 };
