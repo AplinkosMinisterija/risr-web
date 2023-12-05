@@ -1,14 +1,13 @@
 import styled from "styled-components";
-import LoginLayout from "../components/layouts/LoginLayout";
 import { device } from "../styles";
 import { descriptions, formLabels } from "../utils/texts";
 
 export const CantLogin = () => {
   return (
-    <LoginLayout>
+    <>
       <H1>{formLabels.inActiveProfile}</H1>
       <Description>{descriptions.cantLogin} </Description>
-    </LoginLayout>
+    </>
   );
 };
 
