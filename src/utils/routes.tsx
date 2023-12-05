@@ -10,6 +10,7 @@ import { menuLabels } from "./texts";
 
 export const slugs = {
   profile: "/profilis",
+  login: "/login",
   profiles: "/profiliai",
   forms: "/anktetos",
   newForm: "/anketos/naujas",
@@ -17,7 +18,7 @@ export const slugs = {
   tenantUsers: `/imones_darbuotojai`,
   tenantUser: (id?: string) => `/imones_darbuotojai/${id}`,
   newTenantUser: `/imones_darbuotojai/naujas`,
-  placesMap: `/radavieciu-zemelapis`
+  cantLogin: "/negalima_jungtis"
 };
 
 export const externalRoutes = [
