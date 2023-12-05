@@ -17,6 +17,7 @@ import Cookies from "universal-cookie";
 import api from "./api";
 import DefaultLayout from "./components/layouts/DefaultLayout";
 import LoaderComponent from "./components/other/LoaderComponent";
+import { CantLogin } from "./pages/CantLogin";
 import { Login } from "./pages/Login";
 import { useAppSelector } from "./state/hooks";
 import { ProfileId } from "./types";
@@ -81,6 +82,9 @@ function App() {
   const eGatesLoginMutation = useMutation(
     (ticket: string) => api.eGatesLogin({ ticket }),
     {
+      onError: () => {
+        navigate(slugs.cantLogin);
+      },
       onSuccess: (data) => {
         handleUpdateTokens(data);
         checkAuthMutation();
@@ -155,7 +159,8 @@ function App() {
                   <PublicRoute profileId={profileId} loggedIn={loggedIn} />
                 }
               >
-                <Route path="/login" element={<Login />} />
+                <Route path={slugs.login} element={<Login />} />
+                <Route path={slugs.cantLogin} element={<CantLogin />} />
               </Route>
               <Route
                 element={
@@ -196,7 +201,7 @@ const PublicRoute = ({ loggedIn, profileId }: RouteProps) => {
 
 const ProtectedRoute = ({ loggedIn, profileId, location }: RouteProps) => {
   if (!loggedIn) {
-    return <Navigate to={"/login"} replace />;
+    return <Navigate to={slugs.login} replace />;
   }
 
   if (location?.pathname === slugs.profiles && !!profileId) {

@@ -114,11 +114,7 @@ export const buttonsTitles = {
   submit: "Pateikti",
   back: "Grįžti atgal",
   generate: "Generuoti",
-  approve: "Tvirtinti",
-  return: "Grąžinti taisymui",
-  reject: "Atmesti",
-  importData: "Įkelti duomenis",
-  templateFile: "Šablono failas",
+  returnToLogin: "Grįžti į prisijungimo langą",
   clearAll: "Išvalyti visus",
   filter: "Filtruoti",
   resetPassword: "Atstatyti slaptažodį",
@@ -137,6 +133,7 @@ export const buttonsTitles = {
 };
 
 export const formLabels = {
+  inActiveProfile: "Anketa neaktyvi",
   selectProfile: "Pasirinkite paskyrą",
   login: "Prisijungti",
   history: "Istorija",
@@ -282,10 +279,8 @@ export const validationTexts = {
 };
 
 export const descriptions = {
-  getDataAboutPlaces:
-    "Norėdami matyti tikslų radaviečių žemėlapį, pateikite prašymą gauti duomenis.",
-  getMoreDataAboutPlaces:
-    "Norėdami matyti daugiau radaviečių žemėlapyje, pateikite prašymą gauti duomenis.",
+  cantLogin: "Norint prisijungti turi būti suteikta prieiga",
+
   mainDescription:
     "Elektroninių paslaugų sistema teikianti ir gaunanti duomenis bei informaciją apie vandens telkinius.",
   forgotPasswordDescription:
