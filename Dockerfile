@@ -18,7 +18,8 @@ ARG VITE_BASE_URL=/app
 
 
 # Build and cleanup
-RUN yarn build
+RUN yarn  tsc
+RUN yarn vite build
 
 # Caddy stage
 FROM caddy:2.6-alpine
