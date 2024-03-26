@@ -16,5 +16,6 @@ jobs:
       docker-image: ghcr.io/AplinkosMinisterija/risr-web
       build-args: |
         NODE_ENV=development
-        REACT_APP_SENTRY_ENV=development
-        REACT_APP_SENTRY_DSN=https://52fe256e8ee14e73a1704814223998b2@sentry.biip.lt/23
+        VITE_SENTRY_ENV=development
+        VITE_SENTRY_DSN=https://52fe256e8ee14e73a1704814223998b2@sentry.biip.lt/23
+        VITE_BASE_URL=/app

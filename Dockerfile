@@ -11,9 +11,11 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Set env variables
-ARG REACT_APP_SENTRY_DSN=
-ARG REACT_APP_SENTRY_ENV=production
 ARG NODE_ENV=production
+ARG VITE_SENTRY_DSN=
+ARG VITE_SENTRY_ENV=
+ARG VITE_BASE_URL=/app
+
 
 # Build and cleanup
 RUN yarn build
