@@ -1,13 +1,28 @@
 {
   "name": "risr-web",
   "version": "0.1.0",
+  "prettier": "@aplinkosministerija/biip-prettier-config",
   "scripts": {
-    "test": "vitest",
     "start": "vite --port 8080",
     "build": "tsc && vite build",
     "serve": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install"
+  },
+  "eslintConfig": {
+    "extends": "@aplinkosministerija/eslint-config-biip-react"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^4.12.4",
@@ -52,27 +67,14 @@
     "prettier": "^2.6.2",
     "vite": "^5.2.6"
   },
-  "prettier": "@aplinkosministerija/biip-prettier-config",
-  "eslintConfig": {
-    "extends": "@aplinkosministerija/eslint-config-biip-react"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint"
     ],
     "*.{md,html,css}": "prettier --write"
+  },
+  "engines": {
+    "node": ">=20.0.0 <21.0.0"
   }
 }
