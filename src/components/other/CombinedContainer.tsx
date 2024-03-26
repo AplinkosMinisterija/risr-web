@@ -20,7 +20,7 @@ const CombinedContainer = ({
   const { parent, ...rest } = groupInfo;
   const children = group.children!;
   const currentChild = children[index];
-  const childValue = rest[currentChild?.id!];
+  const childValue = rest[currentChild.id!];
 
   const previous = () => {
     const currentIndex = (index - 1 + children.length) % children.length;

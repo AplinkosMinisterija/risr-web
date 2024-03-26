@@ -9,6 +9,6 @@ export const mapUsers = (users: User[]): TableRow[] =>
       fullName: `${user.firstName} ${user.lastName}`,
       phone: user.phone,
       email: user.email,
-      role: roleLabels[user?.role!]
+      role: roleLabels[user.role!]
     };
   });
