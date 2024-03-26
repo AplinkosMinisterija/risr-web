@@ -39,23 +39,29 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@aplinkosministerija/biip-prettier-config": "^1.1.0",
+    "@aplinkosministerija/eslint-config-biip-react": "^1.0.0",
     "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@types/leaflet": "^1.7.9",
     "@types/react-datepicker": "^4.4.1",
     "@types/react-google-recaptcha": "^2.1.5",
     "@types/secure-random-password": "^0.2.1",
     "@types/styled-components": "^5.1.25",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "husky": "^9.0.11",
     "prettier": "^2.6.2",
     "vite": "^5.2.6"
   },
+  "prettier": "@aplinkosministerija/biip-prettier-config",
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "@aplinkosministerija/eslint-config-biip-react"
   },
   "browserslist": {
     "production": [
@@ -69,7 +75,11 @@
       "last 1 safari version"
     ]
   },
-  "engines": {
-    "node": ">=20.0.0 <21.0.0"
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint"
+    ],
+    "*.{md,html,css}": "prettier --write"
   }
 }
