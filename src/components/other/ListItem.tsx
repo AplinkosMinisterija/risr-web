@@ -77,7 +77,7 @@ const ListItem = ({
             </InnerRow>
           </HeadingRow>
           {group.children?.map((child) => {
-            const childItem = items[child?.id!];
+            const childItem = items[child.id!];
 
             return (
               <TableRow>
@@ -110,14 +110,12 @@ const Name = styled.div`
 
 const TableTitle = styled.div`
   font-size: 1.4rem;
-  align-items: 17px;
   font-weight: bold;
   color: #121926;
 `;
 
 const TableValue = styled.div`
   font-size: 1.4rem;
-  align-items: 17px;
   color: #121926;
 `;
 

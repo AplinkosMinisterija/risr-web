@@ -24,7 +24,7 @@ const Profile = () => {
   const user: User = useAppSelector((state) => state?.user?.userData);
   const currentProfile = useGetCurrentProfile();
   const updateForm = useMutation(
-    (values: UserProps) => api.updateProfile(user?.id!, values),
+    (values: UserProps) => api.updateProfile(user.id!, values),
     {
       onError: () => {
         handleAlert();
