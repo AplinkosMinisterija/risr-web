@@ -11,9 +11,11 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Set env variables
-ARG REACT_APP_SENTRY_DSN=
-ARG REACT_APP_SENTRY_ENV=production
 ARG NODE_ENV=production
+ARG VITE_SENTRY_DSN=
+ARG VITE_SENTRY_ENV=
+ARG VITE_BASE_URL=/
+
 
 # Build and cleanup
 RUN yarn build
@@ -31,4 +33,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD wget -
 COPY ./caddy/Caddyfile /etc/caddy/Caddyfile
 
 # Copy built files from the build stage
-COPY --from=build /app/build /srv
+COPY --from=build /app/dist /srv

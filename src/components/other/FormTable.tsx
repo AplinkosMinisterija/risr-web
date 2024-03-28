@@ -42,9 +42,9 @@ const RenderTable = ({
     }[] = innerItems.map((item) => {
       return groups.reduce((prev, group) => {
         const getAllValues = (key) =>
-          getMaxValue(
-            group?.children?.flat().map((group) => item?.[group?.id!]?.[key])!
-          );
+            group.children ? getMaxValue(
+            group.children.flat().map((group) => item[group.id!][key])!
+          ): [];
 
         const k = getAllValues("k");
         const v = getAllValues("v");
@@ -110,9 +110,9 @@ const RenderTable = ({
       const childrenGroupMaxColumns = group.children?.reduce((prev, curr) => {
         const childItems = innerItems
           .map((item) => {
-            if (!item?.[curr.id!]) return "";
+            if (!item[curr.id!]) return "";
 
-            const { group, ...rest } = item?.[curr.id!];
+            const { group, ...rest } = item[curr.id!];
             return Object.values(rest);
           })
           .flat();
@@ -187,7 +187,7 @@ const RenderTable = ({
               return (
                 <CombinedContainer
                   group={group}
-                  groupInfo={columnMaxes[group?.id!]}
+                  groupInfo={columnMaxes[group.id!]}
                 />
               );
             })}
@@ -305,7 +305,7 @@ const RenderTable = ({
                       <TextField
                         label={"Pavadinimas"}
                         value={values.name}
-                        error={errors?.name!}
+                        error={errors.name!}
                         name={"name"}
                         onChange={(email) => setFieldValue(`name`, email)}
                       />
