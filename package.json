@@ -6,7 +6,6 @@
     "build": "tsc && vite build",
     "serve": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:sarif": "set SARIF_ESLINT_EMBED=true && yarn run lint --format @microsoft/eslint-formatter-sarif --output-file eslint-results.sarif",
     "prepare": "husky install"
   },
 
@@ -41,7 +40,6 @@
   "devDependencies": {
     "@aplinkosministerija/biip-prettier-config": "^1.1.0",
     "@aplinkosministerija/eslint-config-biip-react": "^1.0.0",
-    "@microsoft/eslint-formatter-sarif": "^3.0.0",
     "@types/react-datepicker": "^4.4.1",
     "@types/styled-components": "^5.1.25",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
